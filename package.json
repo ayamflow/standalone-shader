@@ -1,0 +1,23 @@
+{
+  "name": "standalone-shader",
+  "version": "0.0.0",
+  "description": "A native webgl wrapper for 2D shaders.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayamflow/standalone-shader.git"
+  },
+  "keywords": [
+    "shader",
+    "glsl",
+    "webgl",
+    "gl"
+  ],
+  "author": "Florian Morel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ayamflow/standalone-shader/issues"
+  },
+  "homepage": "https://github.com/ayamflow/standalone-shader#readme"
+}
