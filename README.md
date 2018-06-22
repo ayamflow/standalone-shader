@@ -110,7 +110,7 @@ Unbinds gl variables and remove the canvas from the DOM.
     })
 
 ```
-[Demo.](https://ayamflow.github.io/standalone-shader/demo/index.html)
+[Demo.](https://ayamflow.github.io/standalone-shader/demo)
 
 ### TODO
 - mipmap filters
