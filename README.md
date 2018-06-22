@@ -6,6 +6,7 @@ A native webgl wrapper for 2D shaders.
 
 Similar to [gl-shader](https://github.com/stackgl/gl-shader) but with a smaller scope and naive approach.
 This uses the ["big triangle" approach](https://michaldrobot.com/2014/04/01/gcn-execution-patterns-in-full-screen-passes/) instead of a quad.
+This is an ES6 library.
 
 > :warning: experimental package made for learning purposes
 
@@ -18,18 +19,18 @@ npm i ayamflow/standalone-shader -S
 ### Usage :book:
 
 #### createShader(options)
-`options` can contain the following parameters:
-    - canvas
-    - uniforms {}
-    - vertexShader
-    - fragmentShader
+`options {}` can contain the following parameters:
+- canvas `CanvasHTMLElement`
+- uniforms `{}`
+- vertexShader `(string)`
+- fragmentShader `(string)`
 
 All parameters are optional.
 `time` and `resolution` uniforms are automatically passed to the shader.
 
 Uniform examples:
 
-```
+```js
     time: {
         type: 'float',
         value: 0
@@ -48,11 +49,19 @@ Uniform examples:
 ```
 
 #### shader.start
+Starts the rendering loop.
+
 #### shader.stop
+Stops the rendering loop.
+
 #### shader.resize(width, height)
-#### shader.tick(time)
-Override this for
+Resize the canvas and update the `resolution` uniform.
+
+#### shader.onTick(time)
+Called at every frame of the loop. Override to define your custom behavior.
+
 #### shader.destroy
+Unbinds gl variables and remove the canvas from the DOM.
 
 ### Example :floppy_disk:
 
@@ -106,6 +115,7 @@ Override this for
 ### TODO
 - mipmap filters
 - uniform type detection
+- DPI
 - better error log
 - renderer options (alpha, ...)
 - extensions (derivatives, ...)
