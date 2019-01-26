@@ -72,6 +72,7 @@ Unbinds gl variables and remove the canvas from the DOM.
     img.src = './texture.jpg'
 
     let shader = createShader({
+        dpr: window.devicePixelRatio || 1,
         canvas: document.querySelector('canvas'),
         uniforms: {
             map: {
@@ -115,7 +116,6 @@ Unbinds gl variables and remove the canvas from the DOM.
 ### TODO
 - mipmap filters
 - uniform type detection
-- DPI
 - better error log
 - renderer options (alpha, ...)
 - extensions (derivatives, ...)
