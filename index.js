@@ -79,6 +79,7 @@ class Shader {
         this.positionLocation = positionLocation
         this.positionBuffer = positionBuffer
         this.rafID = -1
+        this.dpr = options.dpr || 1
         this.update = this.update.bind(this)
     }
 
@@ -90,15 +91,17 @@ class Shader {
         width = width || innerWidth
         height = height || innerHeight
         const gl = this.gl
+        const scaledWidth = Math.floor(width * this.dpr)
+        const scaledHeight = Math.floor(height * this.dpr)
 
-        gl.canvas.width = width
-        gl.canvas.height = height
+        gl.canvas.width = scaledWidth
+        gl.canvas.height = scaledHeight
         gl.canvas.style.width = width + 'px'
         gl.canvas.style.height = height + 'px'
-        gl.viewport(0, 0, width, height)
+        gl.viewport(0, 0, scaledWidth, scaledHeight)
 
-        this.uniforms.resolution.value[0] = width
-        this.uniforms.resolution.value[1] = height
+        this.uniforms.resolution.value[0] = scaledWidth
+        this.uniforms.resolution.value[1] = scaledHeight
     }
 
     start() {
