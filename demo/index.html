@@ -27,7 +27,6 @@
     <canvas></canvas>
     <canvas></canvas>
 
-    <script type="module" src="index.js"></script>
     <script type="module">
         import shader from '../index.js'
 
@@ -46,6 +45,7 @@
         // Use an image
         let canvas2 = document.querySelectorAll('canvas')[1]
         let sd2 = shader({
+            dpr: window.devicePixelRatio || 1,
             canvas: canvases[1],
             uniforms: {
                 map: {
