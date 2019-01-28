@@ -51,9 +51,10 @@ class Shader {
             let uniform = this.uniforms[name]
             uniform._location = gl.getUniformLocation(program, name)
             uniform._type = getUniformType(uniform.type)
-            if (uniform.value instanceof Image) {
+            if (uniform.value instanceof Image || uniform.value instanceof HTMLCanvasElement) {
                 uniform._isImage = true
                 uniform._value = new Texture(gl, uniform.value, uniform.wrapS, uniform.wrapT, uniform.filter, uniform.flipY)
+                uniform.update = () => uniform._value.update()
             }
             if (uniform._type.indexOf('Matrix') > -1) {
                 uniform._isMatrix = true
