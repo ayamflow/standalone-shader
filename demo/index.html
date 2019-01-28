@@ -26,12 +26,10 @@
 <body>
     <canvas></canvas>
     <canvas></canvas>
+    <canvas></canvas>
 
     <script type="module">
         import shader from '../index.js'
-
-        let img = new Image()
-        img.src = './image.jpg'
 
         let canvases = document.querySelectorAll('canvas')
 
@@ -43,14 +41,16 @@
         sd.start()
 
         // Use an image
-        let canvas2 = document.querySelectorAll('canvas')[1]
+        let img1 = new Image()
+        img1.src = './image.jpg'
+
         let sd2 = shader({
-            dpr: window.devicePixelRatio || 1,
+            dpr: window.devicePixelRatio,
             canvas: canvases[1],
             uniforms: {
                 map: {
                     type: 'sampler2D',
-                    value: img,
+                    value: img1,
                     wrapS: 'clamp',
                     flipY: true
                 }
@@ -78,6 +78,65 @@
         })
         sd2.resize(400, 400)
         sd2.start()
+
+        // Use a canvas element
+        let ctx = document.createElement('canvas').getContext('2d')
+        ctx.canvas.width = 400
+        ctx.canvas.height = 400
+        ctx.fillStyle = '#CCC'
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+
+        let sd3 = shader({
+            drp: window.devicePixelRatio,
+            canvas: canvases[2],
+            uniforms: {
+                canvas: {
+                    type: 'sampler2D',
+                    value: ctx.canvas,
+                    flipY: true
+                }
+            },
+            fragmentShader: `
+                precision highp float;
+                uniform vec2 resolution;
+                uniform sampler2D canvas;
+
+                void main() {
+                    vec2 st = gl_FragCoord.xy / resolution.xy;
+                    gl_FragColor = texture2D(canvas, st);
+                }
+            `
+        })
+        sd3.resize(ctx.canvas.width, ctx.canvas.height)
+        sd3.start()
+
+        function crop(img, width, height, alignX = 0.5, alignY = 0.5) {
+
+            const ratio = img.width / img.height
+            const rect = { x: 0, y: 0, width, height }
+
+            if (ratio > (width / height)) {
+                rect.width = img.width * (height / img.height)
+                rect.x = (width - rect.width) * alignX
+            } else {
+                rect.height = img.height * (width / img.width)
+                rect.y = (height - rect.height) * alignY
+            }
+
+            return rect
+        }
+
+        let img2 = new Image()
+        img2.crossOrigin = 'anonymous'
+        img2.src = 'https://source.unsplash.com/collection/981639/1024x576'
+
+        img2.onload = function() {
+            const img = this
+            const rect = crop(img, ctx.canvas.width, ctx.canvas.height)
+            ctx.drawImage(img, rect.x, rect.y, rect.width, rect.height)
+            sd3.uniforms.canvas.update()
+        };
+
     </script>
 </body>
 </html>
