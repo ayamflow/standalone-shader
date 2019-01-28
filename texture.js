@@ -32,10 +32,11 @@ export default class Texture {
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]))
 
-            image.addEventListener('load', function onload() {
+            const onload = () => {
                 image.removeEventListener('load', onload)
                 this.update()
-            }.bind(this))
+            }
+            image.addEventListener('load', onload);
         }
     }
 
@@ -60,8 +61,8 @@ export default class Texture {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, this.filter || gl.LINEAR)
     }
 
-    destroy(gl) {
-        gl.deleteTexture(this.texture)
+    destroy() {
+        this.gl.deleteTexture(this.texture)
     }
 }
 
