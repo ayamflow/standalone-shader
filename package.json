@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "A native webgl wrapper for 2D shaders.",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "npx live-server --open=demo"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ayamflow/standalone-shader.git"
