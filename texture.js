@@ -31,13 +31,14 @@ export default class Texture {
             // Fill texture with black pixel if image isn't ready
             gl.bindTexture(gl.TEXTURE_2D, texture)
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 0, 255]))
-
-            const self = this
-            image.addEventListener('load', function onload() {
-                image.removeEventListener('load', onload)
-                self.update()
-            })
+            this.onLoad = this.onLoad.bind(this)
+            image.addEventListener('load', this.onLoad)
         }
+    }
+
+    onLoad() {
+        this.image.removeEventListener('load', this.onLoad)
+        this.update()
     }
 
     update() {
@@ -62,6 +63,7 @@ export default class Texture {
     }
 
     destroy() {
+        this.image.removeEventListener('load', this.onLoad)
         this.gl.deleteTexture(this.texture)
     }
 }
