@@ -154,6 +154,9 @@ class Shader {
     }
 
     destroy() {
+        const gl = this.gl
+        this.stop()
+
         let numUniforms = gl.getProgramParameter(this.program, gl.ACTIVE_UNIFORMS)
         for (let i = 0; i < numUniforms; i++) {
             let name = gl.getActiveUniform(this.program, i).name
@@ -163,7 +166,6 @@ class Shader {
             }
         }
 
-        const gl = this.gl
         if (gl.canvas.parentNode) {
             gl.canvas.parentNode.removeChild(gl.canvas)
         }
