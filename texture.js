@@ -13,8 +13,6 @@ const FILTER = {
     // LINEAR_MIPMAP_LINEAR
 }
 
-const noop = o => o;
-
 export default class Texture {
     constructor(gl, image, wrapS, wrapT, filter, flipY) {
         const texture = gl.createTexture()
@@ -65,7 +63,7 @@ export default class Texture {
     }
 
     destroy() {
-        this.update = noop;
+        this.update = noop => noop
         this.image.removeEventListener('load', this.onLoad)
         this.gl.deleteTexture(this.texture)
     }
