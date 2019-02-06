@@ -107,9 +107,7 @@ class Shader {
 
     start() {
         this.stop()
-        if (this.gl.isBuffer(this.positionBuffer)) {
-            this.rafID = requestAnimationFrame(this.update)
-        }
+        this.rafID = requestAnimationFrame(this.update)
     }
 
     stop() {
