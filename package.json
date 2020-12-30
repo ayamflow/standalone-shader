@@ -1,6 +1,6 @@
 {
   "name": "standalone-shader",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A native webgl wrapper for 2D shaders.",
   "main": "index.js",
   "scripts": {},
