@@ -60,7 +60,6 @@ class Shader {
                 uniform._isMatrix = true
             }
         }, this)
-        console.warn('[standalone-shader] uniforms', this.uniforms)
 
         const positionLocation = gl.getAttribLocation(program, 'position')
         const positionBuffer = gl.createBuffer()
