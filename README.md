@@ -21,9 +21,11 @@ npm i ayamflow/standalone-shader -S
 #### createShader(options)
 `options {}` can contain the following parameters:
 - canvas `CanvasHTMLElement`
+- settings `{}` [passed to the context](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/getContextAttributes)
 - uniforms `{}`
 - vertexShader `(string)`
 - fragmentShader `(string)`
+- clearColor `([r, g, b, a] array)`
 
 All parameters are optional.
 `time` and `resolution` uniforms are automatically passed to the shader.

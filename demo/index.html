@@ -27,6 +27,7 @@
     <canvas></canvas>
     <canvas></canvas>
     <canvas></canvas>
+    <canvas></canvas>
 
     <script type="module">
         import shader from '../index.js'
@@ -55,7 +56,7 @@
                     flipY: true
                 }
             },
-            fragmentShader: `
+            fragmentShader: /* glsl */`
                 precision highp float;
 
                 uniform vec2 resolution;
@@ -79,7 +80,7 @@
         sd2.resize(400, 400)
         sd2.start()
 
-        // Use a canvas element
+        // Use a canvas element as placeholder while image loads
         let ctx = document.createElement('canvas').getContext('2d')
         ctx.canvas.width = 400
         ctx.canvas.height = 400
@@ -111,7 +112,6 @@
         sd3.start()
 
         function crop(img, width, height, alignX = 0.5, alignY = 0.5) {
-
             const ratio = img.width / img.height
             const rect = { x: 0, y: 0, width, height }
 
@@ -137,6 +137,25 @@
             sd3.uniforms.canvas.update()
         };
 
+        canvases[3].style.background = 'red'
+        let sd4 = shader({
+            drp: window.devicePixelRatio,
+            canvas: canvases[3],
+            settings: {
+                alpha: true,
+            },
+            clearColor: [0.2, 0.4, 0.6, 0.5],
+            fragmentShader: `
+                precision highp float;
+
+                void main() {
+                    // Sky blue with 0.5 opacity, will mix with red background and look purple
+                    gl_FragColor = vec4(0.2, 0.4, 0.6, 0.5);
+                }
+            `
+        })
+        sd4.resize(ctx.canvas.width, ctx.canvas.height)
+        sd4.start()
     </script>
 </body>
 </html>

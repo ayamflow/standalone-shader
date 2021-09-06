@@ -24,7 +24,7 @@ const defaultFragmentShader = `
 class Shader {
     constructor(options) {
         const canvas = options.canvas || document.createElement('canvas')
-        const gl = canvas.getContext('webgl')
+        const gl = canvas.getContext('webgl', options.settings || {})
         if (!gl) {
             console.warn('[standalone-shader] WebGL doesn\'t seem to be supported.')
             return
@@ -73,6 +73,7 @@ class Shader {
         )
 
         this.gl = gl
+        this.clearColor = options.clearColor || [0, 0, 0, 1]
         this.program = program
         this.vertexShader = vertexShader
         this.fragmentShader = fragmentShader
@@ -122,6 +123,8 @@ class Shader {
 
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height)
         gl.clear(gl.COLOR_BUFFER_BIT)
+        this.gl.clearColor.apply(this.gl, this.clearColor)
+
         gl.useProgram(this.program)
 
         gl.enableVertexAttribArray(this.positionLocation)
